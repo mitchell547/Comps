@@ -8,17 +8,11 @@ To use framework you only need to load ECS_Manager.lua in your code:
 require "ECS_Manager"
 ```
 
-Creating new entity in our ECS instance:
+Creating an instance of ECS Manager:
 ```lua
-player = ECS.newEntity() -- returns index of entity
-ECS.addComponent(player, Component_Position(200, 100))
-ECS.addComponent(player, Component_Velocity(0, 0))
-ECS.addComponent(player, Component_Keyboard_Controls(("w", "d", "s", "a")))
-```
-
-If you want to remove a component "position" from entity with index 'player':
-```lua
-ECS.removeComponent(player, "position")
+function love.load()
+    ECS = ECSManager()
+end
 ```
 
 Adding Systems that will process Components:
@@ -29,11 +23,17 @@ ECS.addSystem(System_Drawing())
 ```
 Note, that order of adding is also the order of Systems calling.
 
-Creating an instance of ECS Manager:
+Creating new entity:
 ```lua
-function love.load()
-    ECS = ECSManager()
-end
+player = ECS.newEntity() -- returns index of entity
+ECS.addComponent(player, Component_Position(200, 100))
+ECS.addComponent(player, Component_Velocity(0, 0))
+ECS.addComponent(player, Component_Keyboard_Controls(("w", "d", "s", "a")))
+```
+
+If you want to remove a component "position" from entity with index 'player':
+```lua
+ECS.removeComponent(player, "position")
 ```
 
 Using ECS in gameloop:
@@ -73,7 +73,8 @@ function System_Moving()
 	}
 	
 	function self.update(dt)	-- callback function, that ECS Manager will call
-		for i, e in pairs(self.subscribers) do	-- iterate over subscribers of this System (subscriber list is generated automatically)
+		-- iterate over subscribers of this System (subscriber list is generated automatically)
+		for i, e in pairs(self.subscribers) do	
 			local p = e.position		
 			local v = e.velocity
 			p.x = p.x + v.vx * dt		-- do some processing
