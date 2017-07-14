@@ -1,5 +1,5 @@
 # Comps
-Entity-Component-System framework on Lua aimed to use with Love2D.
+(WIP) Entity-Component-System framework on Lua aimed to use with Love2D.
 
 # Basic use
 
@@ -64,7 +64,7 @@ end
 Systems are also Lua-tables, that store some functions. This is actually one of the variants to implement a class in Lua.
 ```lua
 function System_Moving()		
-	local self = System_Base()	-- inherit functional of Systems of framework
+	local self = System_Base()	-- inherit functionality of Systems of framework
 	self.name = "moving"		-- call it with unique name
 	
 	self.requirements = {		-- write required Components to process in this System
